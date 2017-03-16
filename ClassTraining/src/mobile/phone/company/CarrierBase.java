@@ -37,7 +37,7 @@ public abstract class CarrierBase {
 		scanner.close();
 	}
 	
-	public void content() {
+	protected void content() {
 		System.out.println("携帯会社 : " + carrierName);
 		System.out.println("基本料金 : " + this.basicCharge);
 		System.out.println("通話料(分) : " + this.callCharge);
