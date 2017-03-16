@@ -6,7 +6,6 @@ public abstract class CarrierBase {
 	
 	protected int basicCharge;
 	protected int callCharge;
-	protected int monthlyCharge;
 	protected String carrierName;
 	protected boolean isDiscount;
 	
@@ -36,7 +35,18 @@ public abstract class CarrierBase {
 		time = scanner.nextInt();
 	}
 	
-public abstract int calc();
+	public void content() {
+		System.out.println("携帯会社 : " + carrierName);
+		System.out.println("基本料金 : " + this.basicCharge);
+		System.out.println("通話料(分) : " + this.callCharge);
+		System.out.println("一ヶ月の使用料金 : " + calc());
+	}
+	
+	public abstract void display();
+	
+	public abstract int calc();
+	
+	public abstract boolean check();
 	
 
 }

@@ -11,10 +11,7 @@ public class Au extends CarrierBase {
 	}
 	
 	public void display() {
-		System.out.println("携帯会社 : " + carrierName);
-		System.out.println("基本料金 : " + this.basicCharge);
-		System.out.println("通話料(分) : " + this.callCharge);
-		System.out.println("一ヶ月の使用料金 : " + this.monthlyCharge);
+		content();
 		
 		if(this.basicCharge != BASIC_CHARGE) {
 			System.out.println("☆学生割引(学生は基本料-500円)");
@@ -23,23 +20,18 @@ public class Au extends CarrierBase {
 		System.out.println("\n");
 	}
 	
-	private boolean check(String job) {
-		if(job.matches(".*学生") || job.equals("高校生")) {
-			return true;
-		}
+	public boolean check() {
 		
-		return false;
+		return (this.job.matches(".*学生") || this.job.equals("高校生"));
 	}
 	
 	public int calc() {
-		this.isDiscount = check(this.job);
+		this.isDiscount = check();
 		
 		if(this.isDiscount) {
 			this.basicCharge = this.basicCharge - 500;
 		}
 		
-		this.monthlyCharge = this.basicCharge + this.callCharge * this.time;
-		
-		return this.monthlyCharge;
+		return this.basicCharge + this.callCharge * this.time;
 	}
 }
