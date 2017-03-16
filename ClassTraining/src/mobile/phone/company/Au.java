@@ -20,9 +20,9 @@ public class Au extends CarrierBase {
 		System.out.println("\n");
 	}
 	
-	public boolean check() {
+	protected boolean check() {
 		
-		return (this.job.matches(".*学生") || this.job.equals("高校生"));
+		return (Au.job.matches(".*学生") || Au.job.equals("高校生"));
 	}
 	
 	public int calc() {
@@ -32,6 +32,6 @@ public class Au extends CarrierBase {
 			this.basicCharge = this.basicCharge - 500;
 		}
 		
-		return this.basicCharge + this.callCharge * this.time;
+		return this.basicCharge + this.callCharge * Au.time;
 	}
 }

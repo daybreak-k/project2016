@@ -10,6 +10,7 @@ public class Docomo extends CarrierBase {
 		this.callCharge = 22;
 	}
 	
+	//
 	public void display() {
 		content();
 		
@@ -20,11 +21,12 @@ public class Docomo extends CarrierBase {
 		System.out.println("\n");
 	}
 	
-	public boolean check() {
+	protected boolean check() {
 		
-		return this.age < 10;
+		return Docomo.age < 10;
 	}
 	
+	//
 	public int calc() {
 		this.isDiscount = check();
 		
@@ -32,7 +34,7 @@ public class Docomo extends CarrierBase {
 			this.basicCharge = 0;
 		}
 		
-		return this.basicCharge + this.callCharge * this.time;
+		return this.basicCharge + this.callCharge * Docomo.time;
 		
 	}
 

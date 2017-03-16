@@ -1,36 +1,27 @@
 package mobile.phone.company;
 
-import java.util.Scanner;
-
 public class PhoneCalcMain {
 
 	public static void main(String[] args) {
-		/*
-		final CalcTalkFee calcTalkFee = new CalcTalkFee();
-		calcTalkFee.exec();
-		*/
-		
-		int min = 99999;
-		int docomoCalc = 0;
-		int auCalc = 0;
-		int softbankCalc = 0;
-		
-		Docomo docomo = new Docomo();
-		Au au = new Au();
-		Softbank softbank = new Softbank();
-		
-		String recommend;
 		
 		CarrierBase.input();
 		
+		int docomoCalc = 0;
+		Docomo docomo = new Docomo();
 		docomoCalc = docomo.calc();
-		softbankCalc = softbank.calc();
-		auCalc = au.calc();
-		
 		docomo.display();
-		softbank.display();
-		au.display();
 		
+		int auCalc = 0;
+		Au au = new Au();
+		auCalc = au.calc();
+		au.display();
+
+		int softbankCalc = 0;
+		Softbank softbank = new Softbank();
+		softbankCalc = softbank.calc();
+		softbank.display();
+		
+		int min = Integer.MAX_VALUE;
 		if(min > docomoCalc) {
 			min = docomoCalc;
 		}
@@ -41,6 +32,7 @@ public class PhoneCalcMain {
 			min = softbankCalc;
 		}
 		
+		String recommend;
 		if(min == docomoCalc) {
 			recommend = docomo.getCariier();
 		} else if(min == auCalc) {

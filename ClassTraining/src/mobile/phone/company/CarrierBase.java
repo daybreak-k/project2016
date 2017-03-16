@@ -33,6 +33,8 @@ public abstract class CarrierBase {
 		job = scanner.next();
 		System.out.println("一ヶ月の通話時間の入力");
 		time = scanner.nextInt();
+		
+		scanner.close();
 	}
 	
 	public void content() {
@@ -46,7 +48,7 @@ public abstract class CarrierBase {
 	
 	public abstract int calc();
 	
-	public abstract boolean check();
+	protected abstract boolean check();
 	
 
 }

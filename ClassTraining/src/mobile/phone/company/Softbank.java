@@ -21,14 +21,14 @@ public class Softbank extends CarrierBase {
 		System.out.println("\n");
 	}
 	
-	public boolean check() {
+	protected boolean check() {
 		
-		return this.time >= 180;
+		return Softbank.time >= 180;
 		
 	}
 	
 	public int calc() {
-		int tmpTime = this.time;
+		int tmpTime = Softbank.time;
 		
 		this.isDiscount = check();
 		
