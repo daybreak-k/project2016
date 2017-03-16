@@ -21,8 +21,8 @@ public abstract class SampleBaseClass implements SampleIntf {
 		return 0;
 	}
 
-	public abstract void winnerExec();
+	protected abstract void winnerExec();
 
-	public abstract void loseExec();
+	protected abstract void loseExec();
 
 }
