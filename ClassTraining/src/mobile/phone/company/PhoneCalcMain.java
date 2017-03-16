@@ -1,44 +1,30 @@
 package mobile.phone.company;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PhoneCalcMain {
 
 	public static void main(String[] args) {
 		
 		CarrierBase.input();
 		
-		int docomoCalc = 0;
-		Docomo docomo = new Docomo();
-		docomoCalc = docomo.calc();
-		docomo.display();
-		
-		int auCalc = 0;
-		Au au = new Au();
-		auCalc = au.calc();
-		au.display();
-
-		int softbankCalc = 0;
-		Softbank softbank = new Softbank();
-		softbankCalc = softbank.calc();
-		softbank.display();
+		final List<CarrierBase> list = new ArrayList<CarrierBase>();
+		list.add(new Softbank());
+		list.add(new Docomo());
+		list.add(new Au());
 		
 		int min = Integer.MAX_VALUE;
-		if(min > docomoCalc) {
-			min = docomoCalc;
-		}
-		if(min > auCalc) {
-			min = auCalc;
-		}
-		if(min > softbankCalc) {
-			min = softbankCalc;
-		}
-		
-		String recommend;
-		if(min == docomoCalc) {
-			recommend = docomo.getCariier();
-		} else if(min == auCalc) {
-			recommend = au.getCariier();
-		} else {
-			recommend = softbank.getCariier();
+		String recommend = null;
+		for (final CarrierBase carrier : list) {
+			int calcResult = carrier.calc();
+			carrier.display();
+			
+			if(min > calcResult) {
+				min = calcResult;
+				recommend = carrier.getCariier();
+				continue;
+			}
 		}
 		
 		System.out.println(CarrierBase.getName() + "さんにお勧めの携帯会社名 : " + recommend);
