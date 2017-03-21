@@ -21,33 +21,20 @@ public class DayBreakCalendar {
 		final StringBuffer stringBuffer = new StringBuffer();
 
 		// 月初日を取得する
-		Date firstDate = null;
-		try {
-			final DateFormat format = new SimpleDateFormat("yyyyMMdd");
-			firstDate = format.parse(yearMonth + "01");
-		} catch (final Throwable e) {
-			throw new Exception("不正な文字列が入力されました。");
-		}
+		final Date firstDate = getFirstDate(yearMonth);
 
 		// 月初日を元に月末日を取得する
 		final Calendar calendar = Calendar.getInstance();
-		calendar.setTime(firstDate);
-		calendar.add(Calendar.MONTH, 1);
-		calendar.add(Calendar.DATE, -1);
-		final Date lastDate = calendar.getTime();
+		final Date lastDate = getLastDate(calendar, firstDate);
 
 		// ヘッダー情報を出力
 		final String year = yearMonth.substring(0, 4);
 		final String month = yearMonth.substring(4);
-		stringBuffer.append(year);
-		stringBuffer.append("年");
-		stringBuffer.append(month);
-		stringBuffer.append("月");
-		stringBuffer.append(System.lineSeparator());
-		stringBuffer.append("日 月 火 水 木 金 土");
-		stringBuffer.append(System.lineSeparator());
-		stringBuffer.append("--------------------");
-		stringBuffer.append(System.lineSeparator());
+		final String[] calenderString = { year, "年", month, "月", System.lineSeparator(), "日 月 火 水 木 金 土",
+				System.lineSeparator(), "--------------------", System.lineSeparator() };
+		for(String tmp : calenderString) {
+			stringBuffer.append(tmp);
+		}
 
 		// 月初日の曜日を取得する
 		// 日曜日:1
@@ -57,8 +44,7 @@ public class DayBreakCalendar {
 		// 木曜日:5
 		// 金曜日:6
 		// 土曜日:7
-		calendar.setTime(firstDate);
-		final int firstWeekDate = calendar.get(Calendar.DAY_OF_WEEK);
+		final int firstWeekDate = getDayOfWeek(calendar, firstDate);
 
 		// 月初日の曜日に合わせてスペースを挿入
 		for (int i = 1; i < firstWeekDate; i++) {
@@ -68,27 +54,89 @@ public class DayBreakCalendar {
 		Date currentDate = firstDate;
 		do {
 			// 表示用の文字列を取得する
-			calendar.setTime(currentDate);
-			final int date = calendar.get(Calendar.DATE);
-			final String printWord = String.format("%02d", date);
-			stringBuffer.append(printWord);
+			stringBuffer.append(getDateString(calendar, currentDate));
 
 			// 曜日を取得する
-			calendar.setTime(currentDate);
-			final int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
-			if (weekDay == 7) {
+			final int weekDay = getDayOfWeek(calendar, currentDate);
+			if(weekDay == 7) {
 				stringBuffer.append(System.lineSeparator());
 			} else {
 				stringBuffer.append(" ");
 			}
 
 			// 1日加算する
-			calendar.setTime(currentDate);
-			calendar.add(Calendar.DATE, 1);
-			currentDate = calendar.getTime();
+			currentDate = addDate(calendar, currentDate);
 
 		} while (currentDate.compareTo(lastDate) <= 0);
 
 		return stringBuffer.toString();
+	}
+	
+	/**
+	 * 月初日の取得
+	 * 
+	 * @param yearMonth YYYYMM形式の半角数字
+	 * @return 月初日
+	 * @throws Exception Exception
+	 */
+	private Date getFirstDate(final String yearMonth) throws Exception {
+		try {
+			final DateFormat format = new SimpleDateFormat("yyyyMMdd");
+			return format.parse(yearMonth + "01");
+		} catch (final Throwable e) {
+			throw new Exception("不正な文字列が入力されました。");
+		}
+	}
+	
+	/**
+	 * 月末日の取得
+	 * 
+	 * @param calendar Calendarインスタンス
+	 * @param date その日
+	 * @return 月末日
+	 */
+	private Date getLastDate(final Calendar calendar, final Date date) {
+		calendar.setTime(date);
+		int day = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		calendar.set(Calendar.DATE, day);
+		return calendar.getTime();
+	}
+	
+	/**
+	 * 曜日の取得
+	 * 
+	 * @param calendar Calendarインスタンス
+	 * @param date 曜日のデータが欲しい日
+	 * @return 曜日
+	 */
+	private int getDayOfWeek(final Calendar calendar, final Date date) {
+		calendar.setTime(date);
+		return calendar.get(Calendar.DAY_OF_WEEK);
+	}
+	
+	/**
+	 * 一日加算する（翌日の日付にする）
+	 * 
+	 * @param calendar Calendarインスタンス
+	 * @param date 翌日にしたい日
+	 * @return 翌日の日付
+	 */
+	private Date addDate(final Calendar calendar, final Date date) {
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, 1);
+		return calendar.getTime();
+	}
+	
+	/**
+	 * 表示用文字列取得
+	 * 
+	 * @param calendar Calendarインスタンス
+	 * @param date 表示させたい日付
+	 * @return 表示させたい日付の文字列
+	 */
+	private String getDateString(final Calendar calendar, final Date date) {
+		calendar.setTime(date);
+		final int day = calendar.get(Calendar.DATE);
+		return String.format("%02d", day);
 	}
 }
