@@ -23,7 +23,7 @@ public class RegistPageServletTest {
 		map.put("name", "ISHII");
 		map.put("age", "21");
 		map.put("sex", "1");
-		map.put("zip_code", "null");
+		map.put("zip_code", null);
 		
 		Connection connection = null;
 		Statement statement = null;
